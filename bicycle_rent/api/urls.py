@@ -18,4 +18,4 @@ def bicycle_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     cats = Bicycle.objects.all()
     serializer = BicycleSerializer(cats, many=True)
-    return Response(serializer.data) 
+    return Response(serializer.data)
