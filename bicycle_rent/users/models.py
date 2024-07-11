@@ -14,6 +14,13 @@ class User(AbstractUser):
         max_length=150,
         blank=True
     )
+    rent_now = models.BooleanField(
+        verbose_name='С велосипедом ли в данный момент',
+        default=False
+    )
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = 'Пользователь'

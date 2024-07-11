@@ -5,7 +5,7 @@ from .models import User
 
 class UserAdmin(admin.ModelAdmin):
     # Перечисляем поля, которые должны отображаться в админке
-    list_display = ('id', 'email', 'first_last_name') 
+    list_display = ('id', 'email', 'first_last_name', 'rent_now') 
     # Добавляем интерфейс для поиска по тексту постов
     search_fields = ('email', 'first_last_name') 
 

@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from api.urls import bicycle_list
+#from api.urls import bicycle_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', bicycle_list),
+    path('api/', include('api.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
 ]

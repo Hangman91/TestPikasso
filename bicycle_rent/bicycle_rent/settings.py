@@ -145,3 +145,11 @@ SIMPLE_JWT = {
    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
    'AUTH_HEADER_TYPES': ('Bearer',),
 } 
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'api.serializers.CustomUserSerializer',
+#        'token_create': 'api.serializers.CustomTokenCreateSerializer'
+    },
+    'LOGIN_FIELD': 'email'
+}
