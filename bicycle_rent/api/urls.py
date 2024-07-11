@@ -8,28 +8,36 @@
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
-from api.views import BicycleViewSet, RentViewSet
+#from api.views import BicycleViewSet, RentViewSet
 
-router = SimpleRouter()
+# router = SimpleRouter()
 
-router.register(
-    'rent',
-    RentViewSet
-)
-router.register(
-    'bicycle',
-    BicycleViewSet
-)
+# router.register(
+#     'rent',
+#     RentViewSet
+# )
+# router.register(
+#     'bicycle',
+#     BicycleViewSet
+# )
 
+
+# urlpatterns = [
+#     path(
+#         '',
+#         include(router.urls)
+#     ),
+# ]
+
+from django.urls import path
+
+from api.views import BicycleList, BicycleRent
 
 urlpatterns = [
-    path(
-        '',
-        include(router.urls)
-    ),
-]
-
-
+    path('bicycle/', BicycleList.as_view()),
+    path('bicycle/<int:pk>/', BicycleRent.as_view()),
+    path('bicycle/stop/'), BicycleStop.as_view()),
+] 
 
 
 

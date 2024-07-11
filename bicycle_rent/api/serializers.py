@@ -16,6 +16,7 @@ class RentSerializer(serializers.ModelSerializer):
         model = Rent
         fields = '__all__' 
 
+
 class CustomUserSerializer(UserSerializer):
     class Meta:
         model = User

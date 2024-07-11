@@ -2,22 +2,66 @@ from django.shortcuts import render
 from rest_framework import permissions, status, viewsets
 
 from bicycle.models import Bicycle, Rent
+from users.models import User
 from .serializers import BicycleSerializer, RentSerializer
+from .permissions import UserHasNoBicycle, UserHasBicycle
+
+from rest_framework import generics
+from django.shortcuts import get_object_or_404
+
+from rest_framework.response import Response
+# class BicycleViewSet(viewsets.ReadOnlyModelViewSet):
+#     """Вьюсет для великов . Изменять нельзя, потому рид онли"""
+
+#     permission_classes = (permissions.IsAuthenticated, UserHasNoBicycle)
+#     queryset = Bicycle.objects.filter(is_free=True)
+#     serializer_class = BicycleSerializer
+#     pagination_class = None
 
 
-class BicycleViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет для великов . Изменять нельзя, потому рид онли"""
+# class RentViewSet(viewsets.ReadOnlyModelViewSet):
+#     """Вьюсет для аренды"""
 
-    permission_classes = (permissions.AllowAny,)
+#     permission_classes = (permissions.IsAuthenticated, UserHasNoBicycle)
+#     queryset = Rent.objects.all()
+#     serializer_class = RentSerializer
+#     pagination_class = None
+from django.utils import timezone
+
+
+class BicycleList(generics.ListAPIView):
     queryset = Bicycle.objects.filter(is_free=True)
     serializer_class = BicycleSerializer
-    pagination_class = None
+    permission_classes = (permissions.IsAuthenticated, UserHasNoBicycle)
 
 
-class RentViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет для великов . Изменять тэги нельзя, потому рид онли"""
+class BicycleRent(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated, UserHasNoBicycle)
+    
+    def create(self, request, **kwargs):
+        bicycle = get_object_or_404(Bicycle, id=self.kwargs.get('pk'))
+        client=request.user
+        bicycle=bicycle
+        Rent.objects.create(client=client, bicycle=bicycle)
+        client.rent_now=True
+        client.save
+        p=get_object_or_404(User, id=request.user.id)
+        p.rent_now=True
+        p.save()
+        return Response(status=status.HTTP_200_OK)
+    
 
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = Rent.objects.all()
-    serializer_class = RentSerializer
-    pagination_class = None
+class BicycleStop(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated, UserHasBicycle)
+    
+    def create(self, request, **kwargs):
+        bicycle = get_object_or_404(Bicycle, id=self.kwargs.get('pk'))
+        client=request.user
+        bicycle=bicycle
+        Rent.objects.create(client=client, bicycle=bicycle)
+        client.rent_now=True
+        client.save
+        p=get_object_or_404(User, id=request.user.id)
+        p.rent_now=True
+        p.save()
+        return Response(status=status.HTTP_200_OK)
