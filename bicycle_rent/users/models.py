@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+#from bicycle.models import Bicycle
 
 class User(AbstractUser):
     email = models.EmailField(
@@ -18,7 +19,15 @@ class User(AbstractUser):
         verbose_name='С велосипедом ли в данный момент',
         default=False
     )
-    
+    bicycle_now = models.ForeignKey(
+        'bicycle.Bicycle',
+        on_delete=models.CASCADE,
+   #     related_name='rent',
+        verbose_name='Велосипед',
+        blank=True,
+        null=True
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

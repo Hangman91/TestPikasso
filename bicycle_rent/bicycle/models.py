@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+#from users.models import User
 from django.utils import timezone
 
 
@@ -19,7 +19,7 @@ class Bicycle(models.Model):
 class Rent(models.Model):
 
     client = models.ForeignKey(
-        User,
+        'users.User',
         on_delete=models.CASCADE,
         related_name='rent',
         verbose_name='Пользователь'
@@ -27,7 +27,7 @@ class Rent(models.Model):
     bicycle = models.ForeignKey(
         Bicycle,
         on_delete=models.CASCADE,
-        related_name='rent',
+        related_name='bicycle',
         verbose_name='Велосипед'
     )
     rent_start_time = models.DateTimeField(

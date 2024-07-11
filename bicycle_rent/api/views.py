@@ -40,6 +40,8 @@ class BicycleRent(generics.CreateAPIView):
     
     def create(self, request, **kwargs):
         bicycle = get_object_or_404(Bicycle, id=self.kwargs.get('pk'))
+        bicycle.is_free=False
+        bicycle.save()
         client=request.user
         bicycle=bicycle
         Rent.objects.create(client=client, bicycle=bicycle)
@@ -47,6 +49,7 @@ class BicycleRent(generics.CreateAPIView):
         client.save
         p=get_object_or_404(User, id=request.user.id)
         p.rent_now=True
+        p.bicycle_now=bicycle
         p.save()
         return Response(status=status.HTTP_200_OK)
     
@@ -55,13 +58,15 @@ class BicycleStop(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated, UserHasBicycle)
     
     def create(self, request, **kwargs):
-        bicycle = get_object_or_404(Bicycle, id=self.kwargs.get('pk'))
         client=request.user
-        bicycle=bicycle
-        Rent.objects.create(client=client, bicycle=bicycle)
-        client.rent_now=True
-        client.save
+
+        rent = Rent.objects.filter(client=client, rent_stop_time=None)[0]
+        rent.rent_stop_time=timezone.now()
+        rent.save()
+        rent.bicycle.is_free=True
+        rent.bicycle.save()
         p=get_object_or_404(User, id=request.user.id)
-        p.rent_now=True
+        p.rent_now=False
+        p.bicycle_now=None
         p.save()
         return Response(status=status.HTTP_200_OK)
