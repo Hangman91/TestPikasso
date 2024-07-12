@@ -15,6 +15,7 @@ source venv/Scripts/activate
 *Устанавливаем зависимости*
 ```
 python -m pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
 *Миграции*
