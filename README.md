@@ -37,14 +37,14 @@ http://127.0.0.1:8000/swagger/
 Регистрация нового пользователя:
 ```
 http://127.0.0.1:8000/auth/users/
+```  
 ```
-{
-    "email": "asas@asas.ru",
-    "first_last_name": "ПУпкин Вася",
-    "password": "123123Ffddf"
-}
-
-
+{  
+    "email": "asas@asas.ru",  
+    "first_last_name": "ПУпкин Вася",  
+    "password": "123123Ffddf"  
+}  
+```
 Создание токена:
 ```
 http://127.0.0.1:8000/auth/jwt/create
