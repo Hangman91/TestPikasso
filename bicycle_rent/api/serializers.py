@@ -25,4 +25,3 @@ class CustomUserSerializer(UserSerializer):
             password = make_password(validated_data.pop('password'))
             return User.objects.create(password=password, **validated_data)
 
-#class CustomTokenCreateSerializer(TokenCreateSerializer):

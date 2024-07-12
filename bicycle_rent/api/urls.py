@@ -31,12 +31,13 @@ from rest_framework.routers import SimpleRouter
 
 from django.urls import path
 
-from api.views import BicycleList, BicycleRent, BicycleStop
+from api.views import BicycleList, BicycleRent, BicycleStop, RentUser
 
 urlpatterns = [
     path('bicycle/', BicycleList.as_view()),
     path('bicycle/<int:pk>/', BicycleRent.as_view()),
     path('bicycle/stop/', BicycleStop.as_view()),
+    path('rent/<int:pk>/', RentUser.as_view()),
 ] 
 
 

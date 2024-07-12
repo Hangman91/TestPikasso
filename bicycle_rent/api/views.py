@@ -10,22 +10,7 @@ from rest_framework import generics
 from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
-# class BicycleViewSet(viewsets.ReadOnlyModelViewSet):
-#     """Вьюсет для великов . Изменять нельзя, потому рид онли"""
 
-#     permission_classes = (permissions.IsAuthenticated, UserHasNoBicycle)
-#     queryset = Bicycle.objects.filter(is_free=True)
-#     serializer_class = BicycleSerializer
-#     pagination_class = None
-
-
-# class RentViewSet(viewsets.ReadOnlyModelViewSet):
-#     """Вьюсет для аренды"""
-
-#     permission_classes = (permissions.IsAuthenticated, UserHasNoBicycle)
-#     queryset = Rent.objects.all()
-#     serializer_class = RentSerializer
-#     pagination_class = None
 from django.utils import timezone
 
 
@@ -57,7 +42,7 @@ class BicycleRent(generics.CreateAPIView):
 class BicycleStop(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated, UserHasBicycle)
     
-    def create(self, request, **kwargs):
+    def post(self, request, **kwargs):
         client=request.user
 
         rent = Rent.objects.filter(client=client, rent_stop_time=None)[0]
@@ -70,3 +55,14 @@ class BicycleStop(generics.CreateAPIView):
         p.bicycle_now=None
         p.save()
         return Response(status=status.HTTP_200_OK)
+
+class RentUser(generics.ListAPIView):
+
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get(self, request, **kwargs):
+        i=self.kwargs.get('pk')
+        client=get_object_or_404(User, id=i)
+        rents = client.rent.all()
+        serializer = RentSerializer(rents, many = True)
+        return Response(serializer.data)
