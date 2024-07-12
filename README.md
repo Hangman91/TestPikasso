@@ -26,11 +26,7 @@ python manage.py migrate
 ```
 python manage.py runserver
 ```
-Создание: 
-http://127.0.0.1:8000/auth/users/
 
-{
-    "email": "...",
-    "first_last_name": "...",
-    "password": "..."
-}
+
+*Спецификацию по api можно получить по ссылке: *
+```http://127.0.0.1:8000/swagger/```
