@@ -33,12 +33,12 @@ python manage.py runserver
 http://127.0.0.1:8000/swagger/
 ```
 
-Примеры запросов:
+Примеры запросов:  
+  
 Регистрация нового пользователя:
 ```
 http://127.0.0.1:8000/auth/users/
-```  
-```
+  
 {  
     "email": "asas@asas.ru",  
     "first_last_name": "ПУпкин Вася",  
